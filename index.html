@@ -2122,38 +2122,14 @@ function initMap() {
   });
 
   // Artesanos démo sur la carte
-  const artesanosDemoMap = [
-    { lat: 3.4580, lng: -76.5280, nom: 'Carlos M.', metier: 'Plomería' },
-    { lat: 3.4450, lng: -76.5400, nom: 'Diana V.', metier: 'Electricidad' },
-    { lat: 3.4620, lng: -76.5180, nom: 'Pedro R.', metier: 'Mecánica' },
-    { lat: 3.4390, lng: -76.5250, nom: 'María T.', metier: 'Cerrajería' },
-  ];
-
-  artesanosDemoMap.forEach(a => {
-    const marker = new google.maps.Marker({
-      position: { lat: a.lat, lng: a.lng },
-      map,
-      title: a.nom,
-      icon: { url: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png' }
-    });
-    const infowindow = new google.maps.InfoWindow({
-      content: `<div style="font-family:sans-serif;padding:4px"><b>${a.nom}</b><br>${a.metier}<br><span style="color:#FF6B35">✓ Disponible</span></div>`
-    });
-    marker.addListener('click', () => infowindow.open(map, marker));
-  });
-
-  // Liste sous la carte
+  const artesanosDemoMap = [];
+  
   const list = document.getElementById('map-artesanos-list');
-  list.innerHTML = artesanosDemoMap.map(a => `
-    <div class="artisan-card" onclick="ouvrirChat({nom:'${a.nom}', metier:'${a.metier}', id:0})">
-      <div class="artisan-avatar" style="background:linear-gradient(135deg,var(--orange),var(--gold))">${getEmojiMap(a.metier)}<div class="online-dot"></div></div>
-      <div class="artisan-info">
-        <div class="artisan-name">${a.nom}</div>
-        <div class="artisan-job">${a.metier}</div>
-        <div class="artisan-meta"><div class="rating">⭐ 4.9</div><div class="distance">📍 Sur la carte</div></div>
-      </div>
-      <div style="color:var(--orange);font-size:20px;">💬</div>
-    </div>`).join('');
+  list.innerHTML = `
+    <div style="text-align:center;padding:30px 20px;color:var(--gray);">
+      <div style="font-size:14px;">Los artesanos verificados aparecerán aquí pronto 🗺️</div>
+      <button class="btn-primary" style="margin-top:16px;" onclick="abrirOficioChat(null)">💬 Solicitar un servicio</button>
+    </div>`;
 }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZqrtqCTdrVTWsEw76qVH5Lfszvrc9WFA&callback=initMap"></script>
@@ -3185,30 +3161,28 @@ function crearTarjeta(a) {
 
 // ===== DEMO DATA (si pas connecté) =====
 function chargerDemoData(filtro = '') {
-  const demos = [
-    { id: 1, nom: 'Carlos Mendoza', metier: 'Plomería', note: 4.9, disponible: true, verifie: true, strato: 4 },
-    { id: 2, nom: 'Diana Vargas', metier: 'Electricidad', note: 4.8, disponible: true, verifie: true, strato: 5 },
-    { id: 3, nom: 'Andrés López', metier: 'Pintura', note: 4.7, disponible: true, verifie: false, strato: 3 },
-    { id: 4, nom: 'María Torres', metier: 'Cerrajería', note: 4.9, disponible: true, verifie: true, strato: 4 },
-    { id: 5, nom: 'Chef Roberto', metier: 'Chef Dom.', note: 4.8, disponible: true, verifie: true, strato: 5 },
-    { id: 6, nom: 'Juan García', metier: 'Jardín', note: 4.7, disponible: true, verifie: true, strato: 3 },
-    { id: 7, nom: 'Pedro Ruiz', metier: 'Mecánica', note: 4.9, disponible: true, verifie: true, strato: 4 },
-    { id: 8, nom: 'Laura Jiménez', metier: 'Limpieza', note: 4.8, disponible: true, verifie: true, strato: 3 },
-  ];
-  const filtrés = filtro ? demos.filter(d => d.metier === filtro) : demos;
-  afficherArtesanos(filtrés, document.getElementById('artesanos-list'));
+  const container = document.getElementById('artesanos-list');
+  if (container) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:40px 20px;color:var(--gray);">
+        <div style="font-size:48px;margin-bottom:16px;">🔧</div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px;">¡Próximamente!</div>
+        <div style="font-size:14px;line-height:1.5;margin-bottom:20px;">Los primeros artesanos verificados<br>de Cali estarán disponibles muy pronto.</div>
+        <button class="btn-primary" onclick="abrirOficioChat(null)">💬 Solicitar un servicio ahora</button>
+      </div>`;
+  }
 }
 
 // ===== URGENCE =====
 async function chargerUrgence() {
   const list = document.getElementById('urgence-list');
-  list.innerHTML = '<div class="loading-state"><div class="spinner"></div><p>Buscando...</p></div>';
-
-  const demos = [
-    { id: 1, nom: 'Carlos Mendoza', metier: 'Plomería', note: 4.9, disponible: true, verifie: true, strato: 4 },
-    { id: 2, nom: 'Diana Vargas', metier: 'Electricidad', note: 4.8, disponible: true, verifie: true, strato: 5 },
-  ];
-  setTimeout(() => afficherArtesanos(demos, list), 600);
+  list.innerHTML = `
+    <div style="text-align:center;padding:40px 20px;color:var(--gray);">
+      <div style="font-size:48px;margin-bottom:16px;">🚨</div>
+      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px;">Servicio de emergencia</div>
+      <div style="font-size:14px;line-height:1.5;margin-bottom:20px;">Describe tu emergencia y<br>OFICIO encontrará la solución.</div>
+      <button class="btn-primary" style="background:var(--red);" onclick="abrirOficioChat(null)">🚨 Solicitar emergencia ahora</button>
+    </div>`;
 }
 
 // ===== AJOUTER ARTESANO =====
