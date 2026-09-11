@@ -1497,6 +1497,11 @@
         <div class="cat-overlay-gradient" style="background:linear-gradient(135deg,var(--orange),var(--gold));opacity:1;"></div>
         <div class="cat-content"><div class="cat-icon">➕</div><div class="cat-name">Otros servicios</div></div>
       </div>
+      <div class="cat-item" onclick="abrirOficioChat('Conciergerie')">
+        <img class="cat-bg" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200&h=200&fit=crop" />
+        <div class="cat-overlay-gradient"></div>
+        <div class="cat-content"><div class="cat-icon">🎩</div><div class="cat-name">Conciergerie</div></div>
+      </div>
     </div>
   </div>
 
@@ -2611,10 +2616,21 @@ async function accepterDevis(numDevis, montant) {
 }
 
 function ouvrirStripeModal(numDevis, montant) {
-  const modal = document.getElementById('stripe-modal');
-  document.getElementById('stripe-montant').textContent = parseInt(montant).toLocaleString() + ' COP';
-  document.getElementById('stripe-num').textContent = '#' + numDevis;
-  modal.classList.add('open');
+  const messages = document.getElementById('chat-messages');
+  const heure = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  messages.innerHTML += `
+    <div class="msg msg-received" style="background:#E8F8F0;color:#1A5C35;">
+      💵 <strong>Pago en efectivo</strong><br>
+      Monto: <strong>${parseInt(montant).toLocaleString()} COP</strong><br>
+      El pago se realizará directamente al artesano al finalizar el servicio.<br>
+      OFICIO te contactará para confirmar los detalles. ✅
+      <div class="msg-time">${heure}</div>
+    </div>`;
+  messages.scrollTop = messages.scrollHeight;
+  showToast('✅ Servicio confirmado · Pago en efectivo');
+  if (currentArtisan) {
+    setTimeout(() => ouvrirAvis(currentArtisan), 3000);
+  }
 }
 
 function fermerStripeModal() {
@@ -2668,7 +2684,7 @@ const PREGUNTAS = {
   'Jardín':        ['¿Qué tipo de trabajo necesitas?', '¿Cuál es el tamaño del jardín?', '¿Con qué frecuencia?', '¿Cuándo necesitas el servicio?'],
   'Piscine & Terrasse': ['¿Qué problema tiene la piscina?', '¿Cuántos m³ tiene?', '¿Puedes enviar una foto?', '¿Es urgente?'],
   'Entregas':      ['¿Qué necesitas transportar?', '¿Dónde recoger?', '¿Dónde entregar?', '¿Cuándo necesitas el servicio?'],
-  'Otros':         ['¿Puedes describir mejor tu necesidad?', '¿Es urgente?', '¿Puedes enviar una foto?', '¿Cuándo necesitas el servicio?'],
+  'Conciergerie': ['¿Qué servicio necesitas exactamente?', '¿Es urgente?', '¿Cuándo necesitas el servicio?', '¿Tienes alguna preferencia especial?'],
 };
 
 let oficioChatState = {
