@@ -2070,15 +2070,19 @@
 <div class="bottom-nav" style="display:none;">
   <div class="nav-item" onclick="goScreen('screen-home')" id="nav-home">
     <div class="nav-icon">🏠</div>
-    <div class="nav-label" data-i18n="inicio">Inicio</div>
+    <div class="nav-label">Inicio</div>
   </div>
   <div class="nav-item" onclick="goScreen('screen-urgence')" id="nav-urgence">
     <div class="nav-icon">🚨</div>
-    <div class="nav-label" data-i18n="urgencia">Urgencia</div>
+    <div class="nav-label">Urgencia</div>
   </div>
   <div class="nav-item" onclick="goScreen('screen-carte')" id="nav-carte">
     <div class="nav-icon">🗺️</div>
-    <div class="nav-label" data-i18n="mapa">Mapa</div>
+    <div class="nav-label">Mapa</div>
+  </div>
+  <div class="nav-item" onclick="goScreen('screen-admin')" id="nav-admin-btn" style="display:none;">
+    <div class="nav-icon">🛡️</div>
+    <div class="nav-label">Admin</div>
   </div>
   <div class="nav-item" onclick="goScreen('screen-dashboard')" id="nav-dashboard">
     <div class="nav-icon">📊</div>
@@ -2086,7 +2090,7 @@
   </div>
   <div class="nav-item" onclick="goScreen('screen-profil')" id="nav-profil">
     <div class="nav-icon">👤</div>
-    <div class="nav-label" data-i18n="perfil">Perfil</div>
+    <div class="nav-label">Perfil</div>
   </div>
 </div>
 
@@ -3036,12 +3040,20 @@ async function loginWithGoogle() {
   await supabaseClient.auth.signInWithOAuth({ provider: 'google' });
 }
 
+const ADMIN_EMAIL = 'gregory.khair82@gmail.com';
+
 function showApp() {
   document.getElementById('auth-container').style.display = 'none';
   document.querySelector('.header').style.display = 'flex';
   document.getElementById('screen-home').classList.add('active');
   document.querySelector('.bottom-nav').style.display = 'flex';
   showToast('✅ Connecté !');
+  
+  // Afficher onglet Admin seulement pour Gregory
+  const isAdmin = currentUser?.email === ADMIN_EMAIL;
+  const adminNav = document.getElementById('nav-admin-btn');
+  if (adminNav) adminNav.style.display = isAdmin ? 'flex' : 'none';
+  
   chargerArtesanos();
 }
 
