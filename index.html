@@ -1015,6 +1015,113 @@
     border-radius: 10px;
   }
 
+  /* ===== OFICIO V2 - CONVERSATION ===== */
+  .oficio-chat-screen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg);
+    z-index: 400;
+    display: none;
+    flex-direction: column;
+    max-width: 430px;
+    margin: 0 auto;
+  }
+  .oficio-chat-screen.open { display: flex; }
+  .oficio-header {
+    background: linear-gradient(135deg, var(--dark), var(--dark2));
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .oficio-avatar {
+    width: 44px; height: 44px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800; color: white;
+    font-family: 'Syne', sans-serif;
+  }
+  .oficio-header-info { flex: 1; }
+  .oficio-header-name { color: white; font-weight: 700; font-size: 16px; }
+  .oficio-header-status { color: var(--orange); font-size: 12px; }
+  .oficio-messages {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .oficio-msg {
+    max-width: 85%; padding: 12px 16px;
+    border-radius: 18px; font-size: 14px; line-height: 1.5;
+  }
+  .oficio-msg-bot {
+    background: white; color: var(--dark);
+    align-self: flex-start;
+    border-radius: 4px 18px 18px 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .oficio-msg-user {
+    background: var(--orange); color: white;
+    align-self: flex-end;
+    border-radius: 18px 18px 4px 18px;
+  }
+  .oficio-msg-system {
+    background: #E8F8F0; color: var(--green);
+    align-self: center; border-radius: 10px;
+    font-size: 12px; text-align: center;
+    padding: 8px 14px; max-width: 90%;
+  }
+  .oficio-options {
+    display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 16px;
+  }
+  .oficio-option-btn {
+    background: white; border: 2px solid var(--orange);
+    color: var(--orange); padding: 8px 14px;
+    border-radius: 20px; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .oficio-input-area {
+    padding: 12px 16px; background: white;
+    display: flex; align-items: center; gap: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .oficio-input {
+    flex: 1; padding: 12px 16px;
+    border: 1.5px solid var(--border); border-radius: 24px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    outline: none; background: var(--bg);
+  }
+  .oficio-input:focus { border-color: var(--orange); }
+  .oficio-send-btn {
+    width: 44px; height: 44px; background: var(--orange);
+    border: none; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .oficio-photo-btn {
+    width: 44px; height: 44px; background: var(--dark2);
+    border: none; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .hero-v2 {
+    background: linear-gradient(135deg, var(--dark), var(--dark2));
+    padding: 28px 20px 20px; text-align: center;
+  }
+  .hero-v2-title {
+    font-family: 'Syne', sans-serif; font-size: 26px;
+    font-weight: 800; color: white; line-height: 1.2; margin-bottom: 8px;
+  }
+  .hero-v2-title span { color: var(--orange); }
+  .hero-v2-sub { color: var(--gray); font-size: 13px; margin-bottom: 16px; line-height: 1.5; }
+  .hero-v2-cta {
+    background: var(--orange); color: white; border: none;
+    padding: 16px 32px; border-radius: 14px; font-size: 16px;
+    font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    width: 100%; margin-bottom: 12px;
+  }
+  .hero-v2-trust { display: flex; justify-content: center; gap: 16px; margin-top: 12px; }
+  .hero-v2-trust-item { color: var(--gray); font-size: 11px; }
+
   /* ===== DEVIS ===== */
   .devis-card {
     background: var(--white);
@@ -1279,6 +1386,22 @@
     </div>
   </div>
 
+  <!-- HERO V2 -->
+  <div class="hero-v2">
+    <div class="hero-v2-title">
+      ¿Tienes un problema?<br>
+      <span>Nosotros encontramos</span><br>
+      quién lo resuelva.
+    </div>
+    <div class="hero-v2-sub">Describe tu problema · OFICIO busca la solución</div>
+    <button class="hero-v2-cta" onclick="abrirOficioChat(null)">💬 SOLICITAR UN SERVICIO</button>
+    <div class="hero-v2-trust">
+      <div class="hero-v2-trust-item">🛡️ Verificados</div>
+      <div class="hero-v2-trust-item">💰 Precio claro</div>
+      <div class="hero-v2-trust-item">✅ Seguro</div>
+    </div>
+  </div>
+
   <!-- URGENCE BANNER -->
   <div class="urgence-banner" onclick="goScreen('screen-urgence')">
     <div class="urgence-left">
@@ -1295,89 +1418,84 @@
   <div class="section">
     <div class="section-title">Servicios</div>
     <div class="categories">
-      <div class="cat-item active" onclick="filtrarCategoria('Plomería')">
+      <div class="cat-item" onclick="abrirOficioChat('Plomería')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🔧</div><div class="cat-name">Plomería</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Electricidad')">
+      <div class="cat-item" onclick="abrirOficioChat('Electricidad')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">⚡</div><div class="cat-name">Electrico</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Pintura')">
+      <div class="cat-item" onclick="abrirOficioChat('Pintura')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🎨</div><div class="cat-name">Pintura</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Carpintería')">
+      <div class="cat-item" onclick="abrirOficioChat('Carpintería')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🔨</div><div class="cat-name">Carpintería</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Cerrajería')">
+      <div class="cat-item" onclick="abrirOficioChat('Cerrajería')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🔑</div><div class="cat-name">Cerrajería</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Climatización')">
+      <div class="cat-item" onclick="abrirOficioChat('Climatización')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">❄️</div><div class="cat-name">Clima</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Limpieza')">
+      <div class="cat-item" onclick="abrirOficioChat('Limpieza')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🧹</div><div class="cat-name">Limpieza</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Chef Dom.')">
+      <div class="cat-item" onclick="abrirOficioChat('Chef Dom.')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">👨‍🍳</div><div class="cat-name">Chef Dom.</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Jardín')">
+      <div class="cat-item" onclick="abrirOficioChat('Jardín')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🌿</div><div class="cat-name">Jardín</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Mecánica')">
+      <div class="cat-item" onclick="abrirOficioChat('Mecánica')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🚗</div><div class="cat-name">Mecánica</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Coach Sportif')">
+      <div class="cat-item" onclick="abrirOficioChat('Coach Sportif')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">💪</div><div class="cat-name">Coach Sport</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Albañilería')">
+      <div class="cat-item" onclick="abrirOficioChat('Albañilería')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🧱</div><div class="cat-name">Albañil</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Carreleur')">
+      <div class="cat-item" onclick="abrirOficioChat('Carreleur')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🪟</div><div class="cat-name">Carreleur</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Piscine & Terrasse')">
+      <div class="cat-item" onclick="abrirOficioChat('Piscine & Terrasse')">
         <img class="cat-bg" src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
         <div class="cat-content"><div class="cat-icon">🏊</div><div class="cat-name">Piscine</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Trámites')">
-        <img class="cat-bg" src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=200&h=200&fit=crop" />
+      <div class="cat-item" onclick="abrirOficioChat('Entregas')">
+        <img class="cat-bg" src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=200&h=200&fit=crop" />
         <div class="cat-overlay-gradient"></div>
-        <div class="cat-content"><div class="cat-icon">📋</div><div class="cat-name">Trámites</div></div>
+        <div class="cat-content"><div class="cat-icon">🚚</div><div class="cat-name">Entregas</div></div>
       </div>
-      <div class="cat-item" onclick="filtrarCategoria('Vivienda')">
-        <img class="cat-bg" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=200&h=200&fit=crop" />
-        <div class="cat-overlay-gradient"></div>
-        <div class="cat-content"><div class="cat-icon">🏠</div><div class="cat-name">Vivienda</div></div>
-      </div>
-      <div class="cat-item" onclick="filtrarCategoria('')">
+      <div class="cat-item" onclick="abrirOficioChat('Otros')">
         <div class="cat-overlay-gradient" style="background:linear-gradient(135deg,var(--orange),var(--gold));opacity:1;"></div>
-        <div class="cat-content"><div class="cat-icon">⋯</div><div class="cat-name">Todo</div></div>
+        <div class="cat-content"><div class="cat-icon">➕</div><div class="cat-name">Otros servicios</div></div>
       </div>
     </div>
   </div>
@@ -1589,8 +1707,6 @@
         <option>Albañilería</option>
         <option>Carreleur</option>
         <option>Piscine & Terrasse</option>
-        <option>Trámites</option>
-        <option>Vivienda</option>
       </select>
     </div>
     <div class="form-group">
@@ -1633,6 +1749,30 @@
     <button class="btn-primary" onclick="goScreen('screen-admin')">🛡️ Accès Admin</button>
     <button class="btn-secondary" onclick="logout()" style="margin-top:12px;">🚪 Se déconnecter</button>
   </div>
+</div>
+
+<!-- OFICIO V2 CONVERSATION SCREEN -->
+<div class="oficio-chat-screen" id="oficio-chat-screen">
+  <div class="oficio-header">
+    <button onclick="fermerOficioChat()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;">←</button>
+    <div class="oficio-avatar">O</div>
+    <div class="oficio-header-info">
+      <div class="oficio-header-name">OFICIO</div>
+      <div class="oficio-header-status">🟢 En línea · Tu asistente</div>
+    </div>
+  </div>
+
+  <div class="oficio-messages" id="oficio-messages"></div>
+
+  <div class="oficio-options" id="oficio-options"></div>
+
+  <div class="oficio-input-area">
+    <button class="oficio-photo-btn" onclick="adjuntarFoto()">📷</button>
+    <input class="oficio-input" id="oficio-input" type="text" placeholder="Escribe tu problema..." />
+    <button class="oficio-send-btn" onclick="enviarMensajeOficio()">➤</button>
+  </div>
+
+  <input type="file" id="foto-input" accept="image/*" style="display:none;" onchange="procesarFoto(this)" />
 </div>
 
 <!-- CGU OVERLAY -->
@@ -1952,7 +2092,7 @@ const GOOGLE_MAPS_KEY = 'AIzaSyDZqrtqCTdrVTWsEw76qVH5Lfszvrc9WFA';
 function getEmojiMap(metier) {
   const emojis = { 'Plomería': '🔧', 'Electricidad': '⚡', 'Pintura': '🎨', 
     'Carpintería': '🔨', 'Cerrajería': '🔑', 'Climatización': '❄️', 
-    'Limpieza': '🧹', 'Chef Dom.': '👨‍🍳', 'Jardín': '🌿', 'Mecánica': '🚗', 'Trámites': '📋', 'Vivienda': '🏠' };
+    'Limpieza': '🧹', 'Chef Dom.': '👨‍🍳', 'Jardín': '🌿', 'Mecánica': '🚗' };
   return emojis[metier] || '🔨';
 }
 
@@ -2023,8 +2163,8 @@ function initMap() {
 // ============================================================
 // 🔧 CONFIGURATION SUPABASE
 // ============================================================
-const SUPABASE_URL = 'https://vkdjgdszhaaqewgskodg.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrZGpnZHN6aGFhcWV3Z3Nrb2RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1ODcwNjQsImV4cCI6MjA5NTE2MzA2NH0.nMAOM_l-4kgBqfydC33Esr5y2jARtC3qesK5eHKzpbg';
+const SUPABASE_URL = 'https://qgzsuolsvukyskqblknz.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnenN1b2xzdnVreXNrcWJsa256Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMTMwODAsImV4cCI6MjEwNDY4OTA4MH0.6upOPdhDjr8XB3m6iRoxAGVippuRku-gdqkXElQFSgA';
 
 // 🔧 CONFIGURATION STRIPE
 const STRIPE_PUBLIC_KEY = 'pk_test_51Tbc5jV05NXTi6tx01kDvAZRoRPXtn6yZO11NKTJaApO4SsOq7FVRs7j9I2K4DKblETkur5AEoW4kWW1XZRjQPIz00oEMlUWkV';
@@ -2395,10 +2535,7 @@ function envoyerDevis() {
   }
 
   const numDevis = Math.floor(Math.random() * 9000 + 1000);
-  const isUrgence = document.getElementById("nav-urgence") && document.getElementById("nav-urgence").classList.contains("active");
-  const commissionRate = isUrgence ? 0.20 : 0.10;
-  const fraisClient = 0.05;
-  const commission = Math.round(parseInt(montant) * (commissionRate + fraisClient));
+  const commission = Math.round(parseInt(montant) * 0.15);
   const totalClient = Math.round(parseInt(montant) * 1.05);
   const messages = document.getElementById('chat-messages');
   const heure = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
@@ -2431,7 +2568,7 @@ function envoyerDevis() {
       <div class="devis-montant">
         <div>
           <div class="devis-montant-label">Montant total</div>
-          <div class="devis-montant-currency">${isUrgence ? "Frais urgence inclus (5% + commission 20%)" : "Frais service inclus (5%)"}</div>
+          <div class="devis-montant-currency">Frais service inclus (5%)</div>
         </div>
         <div class="devis-montant-val">${parseInt(totalClient).toLocaleString()} <span style="font-size:13px;">COP</span></div>
       </div>
@@ -2518,6 +2655,202 @@ async function payerAvecStripe() {
   }, 2000);
 }
 
+// ===== OFICIO V2 - CONVERSATION SYSTEM =====
+const WHATSAPP_NUM = '573146308300';
+
+const PREGUNTAS = {
+  'Plomería':      ['¿Dónde está el problema exactamente?', '¿Hay pérdida de agua visible?', '¿Es urgente?', '¿Puedes enviar una foto?'],
+  'Electricidad':  ['¿Qué no funciona exactamente?', '¿Hay riesgo de cortocircuito?', '¿Es urgente?', '¿Puedes enviar una foto?'],
+  'Pintura':       ['¿Cuántos m² aproximadamente?', '¿Interior o exterior?', '¿Tienes preferencia de color?', '¿Cuándo necesitas el trabajo?'],
+  'Albañilería':   ['¿Qué tipo de trabajo necesitas?', '¿Cuál es el tamaño aproximado?', '¿Puedes enviar una foto?', '¿Cuándo necesitas el trabajo?'],
+  'Climatización': ['¿Qué problema tiene el aire?', '¿Es instalación o reparación?', '¿Cuántos equipos?', '¿Es urgente?'],
+  'Limpieza':      ['¿Cuántos m² tiene el espacio?', '¿Limpieza general o profunda?', '¿Con qué frecuencia?', '¿Cuándo necesitas el servicio?'],
+  'Jardín':        ['¿Qué tipo de trabajo necesitas?', '¿Cuál es el tamaño del jardín?', '¿Con qué frecuencia?', '¿Cuándo necesitas el servicio?'],
+  'Piscine & Terrasse': ['¿Qué problema tiene la piscina?', '¿Cuántos m³ tiene?', '¿Puedes enviar una foto?', '¿Es urgente?'],
+  'Entregas':      ['¿Qué necesitas transportar?', '¿Dónde recoger?', '¿Dónde entregar?', '¿Cuándo necesitas el servicio?'],
+  'Otros':         ['¿Puedes describir mejor tu necesidad?', '¿Es urgente?', '¿Puedes enviar una foto?', '¿Cuándo necesitas el servicio?'],
+};
+
+let oficioChatState = {
+  categoria: null,
+  problema: null,
+  fotos: [],
+  respuestas: [],
+  preguntaIndex: 0,
+  fase: 'inicio' // inicio → categoria → problema → preguntas → resumen
+};
+
+function abrirOficioChat(categoria) {
+  oficioChatState = { categoria, problema: null, fotos: [], respuestas: [], preguntaIndex: 0, fase: 'inicio' };
+  document.getElementById('oficio-chat-screen').classList.add('open');
+  document.getElementById('oficio-messages').innerHTML = '';
+  document.getElementById('oficio-options').innerHTML = '';
+  
+  setTimeout(() => {
+    agregarMensajeOficio('bot', '👋 Hola! Soy OFICIO. Vamos a encontrar la solución para ti.');
+    setTimeout(() => {
+      if (categoria) {
+        oficioChatState.fase = 'problema';
+        oficioChatState.categoria = categoria;
+        agregarMensajeOficio('bot', `Perfecto, seleccionaste **${categoria}**. ¿Qué necesitas exactamente?`);
+      } else {
+        oficioChatState.fase = 'categoria';
+        agregarMensajeOficio('bot', '¿Qué tipo de servicio necesitas?');
+        mostrarOpcionesCategoria();
+      }
+    }, 800);
+  }, 300);
+}
+
+function fermerOficioChat() {
+  document.getElementById('oficio-chat-screen').classList.remove('open');
+}
+
+function agregarMensajeOficio(tipo, texto) {
+  const messages = document.getElementById('oficio-messages');
+  const div = document.createElement('div');
+  div.className = `oficio-msg oficio-msg-${tipo}`;
+  div.innerHTML = texto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function mostrarOpcionesCategoria() {
+  const opts = document.getElementById('oficio-options');
+  const cats = ['🔧 Plomería', '⚡ Electricidad', '🎨 Pintura', '🧱 Albañilería', 
+                 '❄️ Clima', '🧹 Limpieza', '🌿 Jardín', '🏊 Piscina',
+                 '🚚 Entregas', '➕ Otros servicios'];
+  opts.innerHTML = cats.map(c => 
+    `<button class="oficio-option-btn" onclick="seleccionarCategoria('${c}')">${c}</button>`
+  ).join('');
+}
+
+function seleccionarCategoria(cat) {
+  const catKey = cat.replace(/[🔧⚡🎨🧱❄️🧹🌿🏊🚚➕]\s?/g, '').trim();
+  oficioChatState.categoria = catKey;
+  oficioChatState.fase = 'problema';
+  document.getElementById('oficio-options').innerHTML = '';
+  agregarMensajeOficio('user', cat);
+  setTimeout(() => {
+    agregarMensajeOficio('bot', `Perfecto. ¿Qué necesitas exactamente? Descríbeme el problema.`);
+  }, 500);
+}
+
+function enviarMensajeOficio() {
+  const input = document.getElementById('oficio-input');
+  const texto = input.value.trim();
+  if (!texto) return;
+  
+  agregarMensajeOficio('user', texto);
+  input.value = '';
+  
+  const opts = document.getElementById('oficio-options');
+  opts.innerHTML = '';
+  
+  setTimeout(() => procesarRespuestaOficio(texto), 800);
+}
+
+function procesarRespuestaOficio(texto) {
+  const estado = oficioChatState;
+  
+  if (estado.fase === 'problema') {
+    estado.problema = texto;
+    estado.fase = 'preguntas';
+    estado.preguntaIndex = 0;
+    
+    agregarMensajeOficio('bot', '📸 ¿Puedes enviarnos una foto del problema? (opcional)');
+    
+    const opts = document.getElementById('oficio-options');
+    opts.innerHTML = `
+      <button class="oficio-option-btn" onclick="adjuntarFoto()">📷 Adjuntar foto</button>
+      <button class="oficio-option-btn" onclick="continuarSinFoto()">Continuar sin foto</button>
+    `;
+    return;
+  }
+  
+  if (estado.fase === 'preguntas') {
+    estado.respuestas.push(texto);
+    const preguntas = PREGUNTAS[estado.categoria] || PREGUNTAS['Otros'];
+    
+    if (estado.preguntaIndex < preguntas.length - 1) {
+      estado.preguntaIndex++;
+      agregarMensajeOficio('bot', preguntas[estado.preguntaIndex]);
+    } else {
+      estado.fase = 'resumen';
+      mostrarResumenYNotificar();
+    }
+  }
+}
+
+function continuarSinFoto() {
+  document.getElementById('oficio-options').innerHTML = '';
+  const preguntas = PREGUNTAS[oficioChatState.categoria] || PREGUNTAS['Otros'];
+  agregarMensajeOficio('bot', preguntas[0]);
+  oficioChatState.preguntaIndex = 0;
+  oficioChatState.fase = 'preguntas';
+}
+
+function adjuntarFoto() {
+  document.getElementById('foto-input').click();
+}
+
+function procesarFoto(input) {
+  if (input.files && input.files[0]) {
+    oficioChatState.fotos.push(input.files[0].name);
+    agregarMensajeOficio('user', `📷 Foto adjuntada: ${input.files[0].name}`);
+    agregarMensajeOficio('bot', '✅ Foto recibida! ');
+    document.getElementById('oficio-options').innerHTML = '';
+    setTimeout(() => {
+      const preguntas = PREGUNTAS[oficioChatState.categoria] || PREGUNTAS['Otros'];
+      agregarMensajeOficio('bot', preguntas[0]);
+      oficioChatState.preguntaIndex = 0;
+      oficioChatState.fase = 'preguntas';
+    }, 500);
+  }
+}
+
+function mostrarResumenYNotificar() {
+  const estado = oficioChatState;
+  
+  // Message de confirmation au client
+  setTimeout(() => {
+    agregarMensajeOficio('bot', '✅ ¡Perfecto! Hemos recibido tu solicitud. Nuestro equipo la está analizando.');
+    setTimeout(() => {
+      agregarMensajeOficio('bot', '⏱️ Te contactaremos en menos de **30 minutos** con una solución.');
+      agregarMensajeOficio('system', '🛡️ OFICIO se ocupa de todo · Profesional verificado garantizado');
+      
+      // Envoyer notification WhatsApp
+      enviarNotificacionWhatsApp(estado);
+    }, 800);
+  }, 500);
+}
+
+function enviarNotificacionWhatsApp(estado) {
+  const msg = encodeURIComponent(
+    `🔔 NUEVA SOLICITUD OFICIO\n\n` +
+    `📋 Categoría: ${estado.categoria}\n` +
+    `❓ Problema: ${estado.problema}\n` +
+    `💬 Respuestas: ${estado.respuestas.join(' | ')}\n` +
+    `📷 Fotos: ${estado.fotos.length > 0 ? estado.fotos.join(', ') : 'Sin fotos'}\n` +
+    `⏰ Fecha: ${new Date().toLocaleString('es-CO')}\n\n` +
+    `👉 Responde al cliente via la app Oficio.co`
+  );
+  
+  // Ouvrir WhatsApp avec le message
+  const url = `https://wa.me/${WHATSAPP_NUM}?text=${msg}`;
+  window.open(url, '_blank');
+}
+
+// Input OFICIO avec Enter
+document.addEventListener('DOMContentLoaded', () => {
+  const oficioInput = document.getElementById('oficio-input');
+  if (oficioInput) {
+    oficioInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') enviarMensajeOficio();
+    });
+  }
+});
+
 // ===== CHAT FUNCTIONS =====
 let currentArtisan = null;
 const MOTS_INTERDITS = ['@', 'whatsapp', 'instagram', 'facebook', 'gmail', 'yahoo', 
@@ -2571,7 +2904,7 @@ function masquerNom(nom) {
 function getEmoji(metier) {
   const emojis = { 'Plomería': '🔧', 'Electricidad': '⚡', 'Pintura': '🎨', 
     'Carpintería': '🔨', 'Cerrajería': '🔑', 'Climatización': '❄️', 
-    'Limpieza': '🧹', 'Chef Dom.': '👨‍🍳', 'Jardín': '🌿', 'Mecánica': '🚗', 'Coach Sportif': '💪', 'Trámites': '📋', 'Vivienda': '🏠' };
+    'Limpieza': '🧹', 'Chef Dom.': '👨‍🍳', 'Jardín': '🌿', 'Mecánica': '🚗', 'Coach Sportif': '💪' };
   return emojis[metier] || '🔨';
 }
 
@@ -2803,8 +3136,6 @@ function crearTarjeta(a) {
     'Albañilería': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=120&h=120&fit=crop',
     'Carreleur': 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&h=120&fit=crop',
     'Piscine & Terrasse': 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=120&h=120&fit=crop',
-    'Trámites': 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=120&h=120&fit=crop',
-    'Vivienda': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=120&h=120&fit=crop',
   };
   const photo = a.photo || photos[a.metier] || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=120&h=120&fit=crop';
   const note = a.note || 4.8;
@@ -2845,8 +3176,6 @@ function chargerDemoData(filtro = '') {
     { id: 4, nom: 'María Torres', metier: 'Cerrajería', note: 4.9, disponible: true, verifie: true, strato: 4 },
     { id: 5, nom: 'Chef Roberto', metier: 'Chef Dom.', note: 4.8, disponible: true, verifie: true, strato: 5 },
     { id: 6, nom: 'Juan García', metier: 'Jardín', note: 4.7, disponible: true, verifie: true, strato: 3 },
-    { id: 15, nom: 'Carlos Reyes', metier: 'Trámites', note: 4.9, disponible: true, verifie: true, strato: 5 },
-    { id: 16, nom: 'Diana Morales', metier: 'Vivienda', note: 4.8, disponible: true, verifie: true, strato: 4 },
     { id: 7, nom: 'Pedro Ruiz', metier: 'Mecánica', note: 4.9, disponible: true, verifie: true, strato: 4 },
     { id: 8, nom: 'Laura Jiménez', metier: 'Limpieza', note: 4.8, disponible: true, verifie: true, strato: 3 },
   ];
